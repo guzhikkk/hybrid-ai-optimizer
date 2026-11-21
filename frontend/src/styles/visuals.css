@@ -1,0 +1,448 @@
+/* ==========================================================================
+   ConvergeLab Visualizations & Solution Card — Strict 4px Grid
+   ========================================================================== */
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+/* ---------- SwarmCanvas ---------- */
+.axis-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  height: var(--control-sm);
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-surface-high);
+  border: 1px solid var(--border-subtle);
+}
+
+.axis-toggle__btn {
+  height: 24px;
+  padding: 0 var(--space-3);
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.axis-toggle__btn--active {
+  background-color: var(--accent-blue-soft);
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.swarm-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  border-radius: var(--radius-md);
+  background-color: var(--canvas-bg);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.swarm-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.player-bar {
+  margin-top: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-surface-high);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.player-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--control-sm);
+  height: var(--control-sm);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  flex-shrink: 0;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.player-btn:hover:not(:disabled) {
+  background-color: var(--accent-blue-soft);
+  color: var(--accent-blue);
+}
+
+.player-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.player-btn--primary {
+  background: var(--accent-gradient);
+  color: #ffffff;
+}
+
+.player-btn--primary:hover:not(:disabled) {
+  background: var(--accent-gradient);
+  color: #ffffff;
+  opacity: 0.92;
+}
+
+.player-slider {
+  flex: 1;
+  height: 4px;
+  accent-color: var(--accent-blue);
+  cursor: pointer;
+}
+
+.player-slider:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.player-counter {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 72px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.speed-btn {
+  height: 28px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-surface);
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.speed-btn:hover:not(:disabled) {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+/* ---------- ConvergenceChart ---------- */
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 320px;
+}
+
+.chart-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+.chart-legend {
+  margin-top: var(--space-4);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.chart-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+
+.chart-legend__swatch {
+  width: 16px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.chart-legend__swatch--dashed {
+  background: transparent;
+  border-top: 2px dashed;
+  height: 0;
+}
+
+.chart-tooltip {
+  position: absolute;
+  top: var(--space-4);
+  z-index: 10;
+  min-width: 184px;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-surface-high);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-modal);
+  pointer-events: none;
+}
+
+.chart-tooltip__title {
+  margin: 0 0 var(--space-2);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.chart-tooltip__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.chart-tooltip__name {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-secondary);
+}
+
+.chart-tooltip__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.chart-tooltip__val {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ---------- Empty State Overlay ---------- */
+.empty-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  text-align: center;
+  background-color: var(--canvas-bg);
+  color: var(--text-secondary);
+}
+
+.empty-overlay__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-surface-high);
+  color: var(--accent-blue);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-overlay__text {
+  margin: 0;
+  max-width: 280px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* ---------- SolutionCard ---------- */
+.solution-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.prompt-preview {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-inset);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 88px;
+}
+
+.prompt-preview__plain {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+.prompt-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.prompt-tag--core {
+  background-color: var(--accent-blue-soft);
+  border: 1px solid var(--accent-blue-border);
+  color: var(--accent-blue);
+  font-weight: 500;
+}
+
+.prompt-tag--slot {
+  background-color: var(--bg-surface-high);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.prompt-tag__weight {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background-color: var(--status-warning-soft);
+  color: var(--status-warning);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
+.token-meta {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.token-meta__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.token-meta__label {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+
+.meter-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.meter-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.meter-item__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.meter-item__label {
+  color: var(--text-secondary);
+}
+
+.meter-item__value {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.meter-track {
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-surface-high);
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transition: width 320ms var(--ease-standard);
+}
+
+.meter-fill--blue {
+  background-color: var(--accent-blue);
+}
+
+.meter-fill--green {
+  background-color: var(--status-success);
+}
+
+.meter-fill--warning {
+  background-color: var(--status-warning);
+}
+
+.meter-fill--error {
+  background-color: var(--status-error);
+}
+
+.param-pills {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.param-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: var(--control-sm);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-surface-high);
+  border: 1px solid var(--border-subtle);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+
+.param-pill strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .viz-grid,
+  .solution-grid {
+    grid-template-columns: 1fr;
+  }
+}
