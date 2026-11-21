@@ -1,0 +1,387 @@
+/* ==========================================================================
+   ConvergeLab Compare View, Modal & Banners — Strict 4px Grid
+   ========================================================================== */
+
+/* ---------- Error Banner ---------- */
+.error-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background-color: var(--status-error-soft);
+  border: 1px solid color-mix(in srgb, var(--status-error) 36%, transparent);
+  color: var(--status-error);
+}
+
+.error-banner__content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.error-banner__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.error-banner__title {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+.error-banner__hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+
+/* ---------- Compare Layout ---------- */
+.compare-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.winner-banner {
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  background: var(--accent-gradient-soft);
+  border: 1px solid var(--accent-blue-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+}
+
+.winner-banner__left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.winner-banner__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--accent-gradient);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.winner-banner__eyebrow {
+  margin: 0 0 var(--space-1);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent-blue);
+}
+
+.winner-banner__title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.winner-stats {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.winner-stat {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 136px;
+}
+
+.winner-stat__label {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+
+.winner-stat__value {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ---------- Material Data Table ---------- */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.data-table th {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.data-table th.num-col,
+.data-table td.num-col {
+  text-align: right;
+}
+
+.data-table td {
+  padding: var(--space-4);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background-color: var(--bg-surface-high);
+}
+
+.data-table tbody tr.row-winner {
+  background-color: var(--accent-blue-soft);
+}
+
+.data-table tbody tr.row-winner:hover {
+  background-color: color-mix(in srgb, var(--accent-blue) 18%, transparent);
+}
+
+.preset-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.preset-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.preset-name {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.leader-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--accent-gradient);
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
+.cell-best {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 28px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  background-color: var(--status-success-soft);
+  color: var(--status-success);
+  font-weight: 600;
+}
+
+/* ---------- Scheduler Impact (DDPM vs DDIM) ---------- */
+.scheduler-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.scheduler-panel {
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-inset);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.scheduler-panel__title {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.scheduler-panel__desc {
+  margin: var(--space-1) 0 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+
+/* ---------- Model Info Modal ---------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.64);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+.modal-dialog {
+  width: 100%;
+  max-width: 680px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-modal);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.modal-subtitle {
+  margin: var(--space-1) 0 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--text-secondary);
+}
+
+.modal-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.modal-section__title {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.formula-box {
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-inset);
+  border: 1px solid var(--border-subtle);
+  font-size: 14px;
+  line-height: 24px;
+  color: var(--accent-blue);
+  overflow-x: auto;
+}
+
+.pattern-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.pattern-item {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-surface-high);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.pattern-item__name {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.pattern-item__desc {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+  .scheduler-grid,
+  .pattern-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .winner-banner {
+    padding: var(--space-5);
+  }
+
+  .modal-backdrop {
+    padding: var(--space-4);
+  }
+
+  .modal-dialog {
+    padding: var(--space-5);
+  }
+}
