@@ -14,6 +14,7 @@ if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
 from experiment_runner import ExperimentFactory, ExperimentRunner
+from image_renderer import is_hf_token_configured, render_before_after_pair
 from models import (
     BackendMode,
     ExperimentConfig,
@@ -65,7 +66,8 @@ def create_app() -> Flask:
                 {
                     "status": "ok",
                     "service": "hybrid-ai-optimizer-backend",
-                    "version": "1.0.0",
+                    "version": "1.1.0",
+                    "image_rendering_configured": is_hf_token_configured(),
                 }
             ),
             200,
@@ -141,6 +143,32 @@ def create_app() -> Flask:
             runner = ExperimentRunner()
             comparison = runner.run_comparison(config, num_runs=num_runs)
             return jsonify(comparison), 200
+        except (ValueError, TypeError) as exc:
+            return jsonify({"error": str(exc)}), 400
+        except RuntimeError as exc:
+            return jsonify({"error": str(exc)}), 503
+        except Exception as exc:
+            return (
+                jsonify({"error": "Внутренняя ошибка сервера", "details": str(exc)}),
+                500,
+            )
+
+    @flask_app.route("/api/render-pair", methods=["POST"])
+    def run_render_pair() -> Tuple[Response, int]:
+        """Генерация пары изображений «До / После» с общим seed через HuggingFace API."""
+        try:
+            payload = _parse_json_body()
+            rendered = render_before_after_pair(
+                baseline_prompt=payload.get("baseline_prompt", ""),
+                optimized_prompt=payload.get("optimized_prompt", ""),
+                baseline_guidance_scale=payload.get("baseline_guidance_scale", 7.5),
+                baseline_steps=payload.get("baseline_steps", 25),
+                optimized_guidance_scale=payload.get("optimized_guidance_scale", 8.0),
+                optimized_steps=payload.get("optimized_steps", 25),
+                seed=payload.get("seed"),
+                model_id=payload.get("model_id"),
+            )
+            return jsonify(rendered), 200
         except (ValueError, TypeError) as exc:
             return jsonify({"error": str(exc)}), 400
         except RuntimeError as exc:

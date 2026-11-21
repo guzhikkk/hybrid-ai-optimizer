@@ -149,6 +149,7 @@ export interface HealthResponse {
   status: string;
   service: string;
   version: string;
+  image_rendering_configured?: boolean;
 }
 
 export interface DefaultsResponse {
@@ -160,4 +161,32 @@ export interface DefaultsResponse {
     backend_modes: BackendMode[];
   };
   comparison_presets: ComparisonPresetInfo[];
+}
+
+export interface RenderPairRequest {
+  baseline_prompt: string;
+  optimized_prompt: string;
+  baseline_guidance_scale: number;
+  baseline_steps: number;
+  optimized_guidance_scale: number;
+  optimized_steps: number;
+  seed?: number | null;
+  model_id?: string;
+}
+
+export interface RenderedFrame {
+  prompt: string;
+  guidance_scale: number;
+  steps: number;
+  image_url: string;
+  render_time_sec: number;
+}
+
+export interface RenderPairResponse {
+  model_id: string;
+  seed: number;
+  source: string;
+  total_wall_time_sec: number;
+  baseline: RenderedFrame;
+  optimized: RenderedFrame;
 }

@@ -6,6 +6,8 @@ import type {
   ExperimentResult,
   HealthResponse,
   OptimizeRequestPayload,
+  RenderPairRequest,
+  RenderPairResponse
 } from '../types/api';
 
 const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/+$/, '');
@@ -34,24 +36,24 @@ export const DEFAULT_CONFIG: ExperimentConfig = {
     alpha: 0.6,
     beta: 0.4,
   },
-  slot_dictionaries: {
+    slot_dictionaries: {
     style: [
-      '3d Pixar style render',
-      'Unreal Engine 5 stylized character',
-      'isometric clay figurine',
-      'Blender Cycles studio art',
+      'masterpiece editorial photography, rich colors',
+      'cinematic film still, shallow depth of field',
+      'award-winning digital art, balanced composition',
+      'fine art studio visual, harmonious tones',
     ],
     lighting: [
-      'cinematic volumetric lighting',
-      'soft studio rim light',
-      'warm golden hour glow',
-      'neon cyberpunk backlight',
+      'cinematic volumetric lighting, soft shadows',
+      'soft natural studio rim light',
+      'warm golden hour sunlight glow',
+      'dramatic atmospheric lighting, crisp highlights',
     ],
     detail: [
-      '8k resolution, sharp focus, intricate textures',
-      'octane render, smooth shading, clean geometry',
-      'ultra detailed fur and fabric, global illumination',
-      'minimalist polished surface, crisp edges',
+      'sharp focus, intricate lifelike textures',
+      'ultra detailed surfaces, natural color grading',
+      'crisp details, subtle depth, clean framing',
+      'high dynamic range, refined clarity',
     ],
   },
 };
@@ -155,5 +157,18 @@ export async function runCompare(
       body: JSON.stringify(payload),
     },
     60000,
+  );
+}
+
+export async function renderComparisonPair(
+  payload: RenderPairRequest,
+): Promise<RenderPairResponse> {
+  return requestJson<RenderPairResponse>(
+    '/api/render-pair',
+    {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    },
+    130000,
   );
 }

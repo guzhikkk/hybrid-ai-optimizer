@@ -42,24 +42,24 @@ def default_slot_dictionaries() -> Dict[str, List[str]]:
     Возвращает свежую копию словаря слотов нейросимволического шаблона.
     Используется как default_factory, чтобы исключить разделение мутабельных списков.
     """
-    return {
+    return {       
         "style": [
-            "3d Pixar style render",
-            "Unreal Engine 5 stylized character",
-            "isometric clay figurine",
-            "Blender Cycles studio art",
+            "masterpiece editorial photography, rich colors",
+            "cinematic film still, shallow depth of field",
+            "award-winning digital art, balanced composition",
+            "fine art studio visual, harmonious tones",
         ],
         "lighting": [
-            "cinematic volumetric lighting",
-            "soft studio rim light",
-            "warm golden hour glow",
-            "neon cyberpunk backlight",
+            "cinematic volumetric lighting, soft shadows",
+            "soft natural studio rim light",
+            "warm golden hour sunlight glow",
+            "dramatic atmospheric lighting, crisp highlights",
         ],
         "detail": [
-            "8k resolution, sharp focus, intricate textures",
-            "octane render, smooth shading, clean geometry",
-            "ultra detailed fur and fabric, global illumination",
-            "minimalist polished surface, crisp edges",
+            "sharp focus, intricate lifelike textures",
+            "ultra detailed surfaces, natural color grading",
+            "crisp details, subtle depth, clean framing",
+            "high dynamic range, refined clarity",
         ],
     }
 

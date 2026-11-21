@@ -24,6 +24,8 @@ import type {
   ExperimentResult,
   ThemeMode,
 } from './types/api';
+import { VisualCompareCard } from './components/VisualCompareCard';
+
 
 
 const THEME_STORAGE_KEY = 'convergelab-theme';
@@ -47,6 +49,8 @@ export default function App() {
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
   const [connectionStatus, setConnectionStatus] =
     useState<ConnectionStatus>('checking');
+  const [imageRenderingConfigured, setImageRenderingConfigured] = useState<boolean | null>(null);
+
   const [infoOpen, setInfoOpen] = useState(false);
 
 
@@ -156,10 +160,10 @@ export default function App() {
 
     async function bootstrap() {
       try {
-        await checkHealth();
+        const health = await checkHealth();
         if (cancelled) return;
         setConnectionStatus('live');
-
+        setImageRenderingConfigured(health.image_rendering_configured ?? null);
 
         if (!didAutoRunRef.current) {
           didAutoRunRef.current = true;
@@ -168,6 +172,7 @@ export default function App() {
       } catch {
         if (!cancelled) {
           setConnectionStatus('offline');
+          setImageRenderingConfigured(null);
         }
       }
     }
@@ -360,6 +365,12 @@ export default function App() {
               strategy={optResult?.config.prompt_strategy ?? config.prompt_strategy}
               isLoading={isOptimizing}
             />
+            <VisualCompareCard
+              result={optResult}
+              isOptimizing={isOptimizing}
+              imageRenderingConfigured={imageRenderingConfigured}
+            />
+
           </>
         ) : (
           <CompareView

@@ -221,3 +221,80 @@ def test_api_optimize_and_compare_endpoints() -> None:
     bad_resp = client.post("/api/optimize", json={"optimizer": "invalid_algo"})
     assert bad_resp.status_code == 400
     assert "error" in bad_resp.get_json()
+
+
+def test_api_render_pair_endpoint(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Тест 11: Проверка POST /api/render-pair (успех, валидация 400 и ошибка токена 503)."""
+    import app as app_module
+
+    fake_img = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
+
+    def fake_render(**kwargs: object) -> dict:
+        if not kwargs.get("baseline_prompt"):
+            raise ValueError("baseline_prompt должен быть непустой строкой.")
+        return {
+            "model_id": "test-sdxl",
+            "seed": kwargs.get("seed") or 42,
+            "source": "huggingface_api",
+            "total_wall_time_sec": 1.25,
+            "baseline": {
+                "prompt": kwargs["baseline_prompt"],
+                "guidance_scale": kwargs["baseline_guidance_scale"],
+                "steps": kwargs["baseline_steps"],
+                "image_url": fake_img,
+                "render_time_sec": 1.1,
+            },
+            "optimized": {
+                "prompt": kwargs["optimized_prompt"],
+                "guidance_scale": kwargs["optimized_guidance_scale"],
+                "steps": kwargs["optimized_steps"],
+                "image_url": fake_img,
+                "render_time_sec": 1.2,
+            },
+        }
+
+    monkeypatch.setattr(app_module, "render_before_after_pair", fake_render)
+    client = app_module.create_app().test_client()
+
+    ok_resp = client.post(
+        "/api/render-pair",
+        json={
+            "baseline_prompt": "3D mascot raccoon",
+            "optimized_prompt": "3D mascot raccoon, (3d Pixar style render:1.15)",
+            "baseline_guidance_scale": 7.5,
+            "baseline_steps": 25,
+            "optimized_guidance_scale": 8.4,
+            "optimized_steps": 20,
+            "seed": 1234,
+        },
+    )
+    assert ok_resp.status_code == 200
+    data = ok_resp.get_json()
+    assert data["seed"] == 1234
+    assert data["baseline"]["image_url"].startswith("data:image/")
+    assert data["optimized"]["image_url"].startswith("data:image/")
+
+    bad_resp = client.post(
+        "/api/render-pair",
+        json={"baseline_prompt": "", "optimized_prompt": "valid"},
+    )
+    assert bad_resp.status_code == 400
+
+    def missing_token_render(**_kwargs: object) -> dict:
+        raise RuntimeError("HF_API_TOKEN не задан")
+
+    monkeypatch.setattr(app_module, "render_before_after_pair", missing_token_render)
+    unavail_resp = client.post(
+        "/api/render-pair",
+        json={"baseline_prompt": "a", "optimized_prompt": "b"},
+    )
+    assert unavail_resp.status_code == 503
+
+def test_sanitize_prompt_for_flux() -> None:
+    """Тест 12: Проверка очистки синтаксиса весов (текст:1.14) перед отправкой в FLUX."""
+    from image_renderer import sanitize_prompt_for_flux
+
+    raw = "cat, (masterpiece editorial photography, rich colors:1.14), (warm golden hour glow:1.08)"
+    cleaned = sanitize_prompt_for_flux(raw)
+    assert cleaned == "cat, masterpiece editorial photography, rich colors, warm golden hour glow"
+    assert "(" not in cleaned and ":1." not in cleaned

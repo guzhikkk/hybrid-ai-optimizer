@@ -5,6 +5,8 @@ import './styles/components.css';
 import './styles/visuals.css';
 import './styles/compare.css';
 import App from './App.tsx';
+import './styles/visual-compare.css';
+
 
 
 createRoot(document.getElementById('root')!).render(
