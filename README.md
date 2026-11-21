@@ -35,7 +35,7 @@ Instead of treating optimization as an unverified heuristic, ConvergeLab provide
 ## Documentation & Research Artifacts
 
 > **Research Materials (Links updated as milestones are finalized):**
-> * **Full Technical Report / Explanatory Note (~40 pages):** `[Insert Google Drive Link Here]`
+> * **Full Technical Report / Explanatory Note (~40 pages):** [Google Drive](https://docs.google.com/document/d/11i97cLua02IUkjfzDSre8wnWLghcYGhZ/edit?usp=sharing&ouid=117239262868791418577&rtpof=true&sd=true)
 > * **Short Conference Paper (4 pages):** `[Insert Paper Link Here]`
 > * **Live Web Demo:** `[Insert Deployment URL Here]`
 
